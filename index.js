@@ -1,4 +1,4 @@
-const readline = require('readline');
+ readline = require('readline');
 const convert = require('./convert')
 const rl = readline.createInterface({
  input: process.stdin,
