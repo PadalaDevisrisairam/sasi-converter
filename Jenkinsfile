@@ -1,53 +1,45 @@
 pipeline {
     agent any
 
-    environment {
-        NODEJS_HOME = tool 'NodeJS'
-        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
+    tools {
+        nodejs "NodeJS" // This should match the name you set in Global Tool Configuration
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/PadalaDevisrisairam/sasi-converter.git' // Replace with your repo URL
+                checkout scm
             }
         }
-
         stage('Install Dependencies') {
             steps {
+                // Install npm dependencies
                 sh 'npm install'
             }
         }
-
         stage('Run Tests') {
             steps {
+                // Run tests using Jest
                 sh 'npm test'
             }
         }
-
-        stage('Build') {
-            steps {
-                sh 'npm run build' // If applicable
-            }
-        }
-
         stage('Deploy') {
+            // Example: Deploy only on main branch
+            when {
+                branch 'main'
+            }
             steps {
-                echo "Deploying the application..."
-                // Add deployment commands if necessary
+                echo 'Deploying application...'
+                // Insert your deployment commands here
             }
         }
     }
-
+    
     post {
         always {
-            echo "Pipeline Execution Completed"
-        }
-        success {
-            echo "Pipeline ran successfully!"
-        }
-        failure {
-            echo "Pipeline failed!"
+            // Archive test reports if you have them configured
+            // If using jest-junit, for example:
+            junit 'test-results.xml'
         }
     }
 }
