@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        NODEJS_HOME = tool 'NodeJS 18'
+        NODEJS_HOME = tool 'NodeJS'
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-repo.git' // Replace with your repo URL
+                git 'https://github.com/PadalaDevisrisairam/sasi-converter.git' // Replace with your repo URL
             }
         }
 
