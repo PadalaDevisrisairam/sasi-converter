@@ -1,45 +1,44 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs "NodeJS" // This should match the name you set in Global Tool Configuration
+    environment {
+        NODEJS_HOME = tool 'NodeJS 23.7.0' // Use the Node.js environment from Jenkins
+        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/PadalaDevisrisairam/sasi-converter.git'
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                // Install npm dependencies
                 sh 'npm install'
             }
         }
+
         stage('Run Tests') {
             steps {
-                // Run tests using Jest
                 sh 'npm test'
             }
         }
-        stage('Deploy') {
-            // Example: Deploy only on main branch
-            when {
-                branch 'main'
-            }
+
+        stage('Post-Test Results') {
             steps {
-                echo 'Deploying application...'
-                // Insert your deployment commands here
+                junit 'jest-results.xml'
             }
         }
     }
-    
+
     post {
-        always {
-            // Archive test reports if you have them configured
-            // If using jest-junit, for example:
-            junit 'test-results.xml'
+        success {
+            echo 'Tests passed successfully!'
+        }
+        failure {
+            echo 'Tests failed. Check logs.'
         }
     }
 }
+
