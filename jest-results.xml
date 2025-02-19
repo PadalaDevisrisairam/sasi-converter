@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="0.418">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-02-19T04:45:59" time="0.367" tests="4">
+    <testcase classname=" converts 100 INR to USD correctly" name=" converts 100 INR to USD correctly" time="0.002">
+    </testcase>
+    <testcase classname=" converts 0 INR to USD" name=" converts 0 INR to USD" time="0.001">
+    </testcase>
+    <testcase classname=" handles negative values" name=" handles negative values" time="0">
+    </testcase>
+    <testcase classname=" handles non-numerical values" name=" handles non-numerical values" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
